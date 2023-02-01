@@ -1,0 +1,26 @@
+Circuit: * C:\Users\Charlie\Projects\amp-work\Benson Monarch\LTSpice\Hammond370EX.asc
+
+.OP point found by inspection.
+
+hvunloaded: RMS(v(302.7v))=275.874 FROM 0 TO 0.08
+rectounloaded: RMS(v(5.558v))=5.07117 FROM 0 TO 0.08
+heaterunloaded: RMS(v(3.573v))=3.18076 FROM 0 TO 0.08
+
+
+Date: Tue Jan 24 15:07:49 2023
+Total elapsed time: 4.461 seconds.
+
+tnom = 27
+temp = 27
+method = Gear
+totiter = 2000076
+traniter = 2000076
+tranpoints = 1000039
+accept = 1000039
+rejected = 0
+matrix size = 17
+fillins = 14
+solver = Normal
+Matrix Compiler1: 3.48 KB object code size  0.3/0.2/[0.1]
+Matrix Compiler2: 2.00 KB object code size  0.1/0.1/[0.1]
+

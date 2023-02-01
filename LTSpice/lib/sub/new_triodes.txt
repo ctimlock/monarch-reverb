@@ -1,0 +1,511 @@
+******************************************************
+* Model generated on 27 Dec 2009
+* updated: 6 Jan 2010
+* updated: 31 Jan 2010
+* modified: 11 Feb 2010
+
+* Model format: LTspice
+* New triodes macro model
+* as by Norman L. Koren
+* formulas @ http://www.normankoren.com/Audio/Tubemodspice_article.html
+* External node designations
+* Node A -> Anode
+* Node G -> Grid
+* Node K -> Cathode
+*
+* MU = amplification factor.
+* EX = line curvature, typical range from 1.3 to 1.4, increases with EX.
+* kG1 = used to fit the equation to data for anode current.
+* kG2 = similar to kG1 for screen current (pentode). (N/A here)
+* KP (kP) behaviour region (A) (large negative grid voltage,
+* large plate voltage, and low plate current).
+* KVB "knee" of the characteristic curves, for positive bias.
+
+******************************************************
+
+.subckt Triode A G K ; = 12AU7/ECC82 - base generic
++params: mu=21.5 ex=1.3 kg1=1180 kg2=0 kp=84 kvb=300 VCT=0.00 ccg=2.3p cpg=2.2p ccp=1.0p rgi=2k
+
+RE1   E1 0  1MEG ; dummy so node E1 has two connections
+Ee1   E1 0  Value {(V(A,K)/{kP}) * log(1 + exp({kP} * (1/{mu} + (V(G,K)+VCT)/sqrt({kVB} + pwr(V(A,K),2)))))}
+* GIP   A  K  Value {(pwr(V(E1),{EX})/{kG1}) * (1 + sgn(V(E1)))} ; my interpretation
+GIP   A  K  Value {(pwr(V(E1),EX) + pwrs(V(E1),EX))/KG1} ; Norman Koren's
+
+R1    G  5  {rgi} ; for grid forward current
+D1    5  K  DX ; for grid diode action
+CM1   G  K  {ccg}
+CM2   A  G  {cpg}
+CM3   A  K  {ccp}
+RF1   A  0  1G
+RF2   G  0  1G ; prevent floating nodes
+RF3   K  0  1G
+* .MODEL DX D(IS=1N RS=1)
+.MODEL DX D(Ron=1 Roff=1G Vfwd=0.75)
+.ends
+
+.subckt ECC81 A G K ; datasheet = Philips
+XV1 A G K Triode
++params: mu=65 ex=1.3 kg1=460 kp=260 kvb=300 ccg=2.3p cpg=1.6p ccp=0.2p rgi=2k
+.ends
+
+.subckt 12AT7 A G K ; aka ECC81
+* Tom Mitchell
+XV1 A G K Triode
++params: MU=67.49 EX=1.234 KG1=419.1  KP=213.96 KVB= 300.0 VCT=0.00 RGI=2000 CCG=2.3P cpg=2.2P CCP=1.0p
+.ends
+
+.subckt 12AT7WA A G K
+* MAZDA BELVU Data Sheet AKA ECC81
+XV1 A G K Triode
++params: MU=72.80 EX=1.167 KG1=341.8 KP=233.21 KVB=267.8 VCT=0.00 RGI=2000 CCG=2.3p cpg=2.2p CCP=1.0p
+.ends
+
+.subckt ECC82 A G K
+XV1 A G K Triode
+.ends
+
+.subckt 12AU7 A G K ; aka ECC82
+* Sylvania Technical Manual AKA ECC82 ECC802 5814 6067 6189
+XV1 A G K Triode
++params: MU=20.21 EX=1.230 KG1=1108.7 KP=84.96 KVB=551.3 VCT=0.00 RGI=2000 CCG=2.3p cpg=2.2p CCP=1.0p
+.ends
+
+.subckt 12AU7A A G K
+* MAZDA BELVU Data sheet AKA ECC82 ECC802 5814 6067 6189 
+XV1 A G K Triode
++params: MU=19.41 EX=1.226 KG1=1233.8 KP=104.87 KVB=300.0 VCT=0.00 RGI=2000 CCG=2.3p cpg=2.2p CCP=1.0p
+.ends
+
+.subckt ECC83 A G K
+XV1 A G K Triode
++params: mu=100 ex=1.4 kg1=1060 kp=600 kvb=300 ccg=2.3p cpg=2.4p ccp=0.9p rgi=2k
+.ends
+
+.subckt 12AX7 A G K ; aka ECC83
+* Original Koren Model
+XV1 A G K Triode
++params: MU=100 EX=1.4 KG1=1060 KP=600 KVB=300 VCT=0.00 RGI=2000 CCG=2.3P cpg=2.4P CCP=.9p
+.ends
+
+.subckt 12AX7ASYL A G K
+* Sylvania Technical Manual 1955 AKA ECC83 12AX7A 7025 
+XV1 A G K Triode
++params: MU=105.78 EX=1.474 KG1=1618.2 KP=432.76 KVB=35.6 VCT=0.50 RGI=2000 CCG=2.3p cpg=2.4p CCP=0.9p
+.ends
+
+.subckt 12AX7A A G K
+* RCA data sheet AKA ECC83 7025 
+XV1 A G K Triode
++params: MU=100.26 EX=1.394 KG1=1651.8 KP=17950.75 KVB=524.4 VCT=0.50 RGI=2000 CCG=2.3p cpg=2.4p CCP=0.9p
+.ends
+
+.subckt 12AY7 A G K
+* GE data book June 1955
+XV1 A G K Triode
++params: MU=44.16 EX=1.113 KG1=1192.4 KP=409.96 KVB=300.0 VCT=0.00 RGI=2000 CCG=2.0p cpg=2.0p CCP=1.0p
+.ends
+
+.subckt 12AZ7 A G K
+* RCA data sheet AKA 12AT7 ECC81 ECC801 6060 6201 6679 
+XV1 A G K Triode
++params: MU=74.08 EX=1.371 KG1=382.0 KP=190.11 KVB=300.0 VCT=0.00 RGI=2000 CCG=2.3p cpg=2.2p CCP=1.0p
+.ends
+
+.subckt 12BH7A A G K
+* GE Data sheet 
+XV1 A G K Triode
++params: MU=24.59 EX=1.343 KG1=594.4 KP=73.01 KVB=300.0 VCT=0.00 RGI=2000 CCG=3.9p cpg=3.2p CCP=1.1p
+.ends
+
+.subckt 6SL7 A G K ; datasheet = RCA
+XV1 A G K Triode
++params: mu=70 ex=1.4 kg1=1700 kp=600 kvb=300 ccg=3.2p cpg=2.8p ccp=3.5p rgi=2k
+.ends
+
+.subckt 6SL7GT  A G K
+XV1 A G K Triode
++params: MU=75.89 EX=1.233 KG1=1735.2 KP=1725.27 KVB=7.0 VCT=0.50 RGI=2000 CCG=2.9p cpg=4.1p CCP=1.5p
+.ends
+
+.subckt 6J5 A G K ; like 6SN7
+XV1 A G K Triode
++params: mu=20 ex=1.3 kg1=1400 kp=260 kvb=300 ccg=2.4p cpg=3.9p ccp=0.7p
+.ends
+
+.subckt 6SN7 A G K ; datasheet = GEC
+XV1 A G K Triode
++params: mu=20 ex=1.3 kg1=1400 kp=260 kvb=300 ccg=2.4p cpg=3.9p ccp=0.7p
+.ends
+
+.subckt 6SN7GTA A G K
+XV1 A G K Triode
++params: MU=21.54 EX=1.316 KG1=1261.1 KP=156.78 KVB=296.4 VCT=0.00 RGI=2000 CCG=3.1p cpg=4.7p CCP=1.4p
+.ends
+
+.subckt 6SN7GTB A G K
+* Sylvania 
+XV1 A G K Triode
++params: MU=21.54 EX=1.316 KG1=1261.1 KP=156.78 KVB=296.4 VCT=0.00 RGI=2000 CCG=3.1p cpg=4.7p CCP=1.4p
+.ends
+
+.subckt 6SN7_sofia A G K
+XV1 A G K Triode
++params: mu=21.95 ex=1.5 kg1=2100 kp=169 kvb=4 cpg=4p ccg=3p ccp=1.2p rgi=1000
+.ends
+
+.subckt 6DJ8 A G K ; aka ECC88
+XV1 A G K Triode
++params: mu=28 ex=1.3 kg1=330 kp=320 kvb=300 ccg=2.3p cpg=2.1p ccp=0.7p rgi=2k
+.ends
+
+.subckt 6EM7_1 A G K
+* by Mike H
+XV1 A G K Triode
++params: MU=71.97 EX=1.3 KG1=1450 KP=700 KVB=0.7 VCT=0.50 RGI=2000 CCG=2.2p cpg=4.8p CCP=0.6p
+.ends
+
+.subckt 6EM7_2 A G K
+* by Mike H
+XV1 A G K Triode
++params: mu=5.0 ex=1.3 kg1=560 kp=100 kvb=200 CCG=7.0p cpg=10.0p CCP=1.8p
+.ends
+
+.subckt 6DN7_1 A G K ; section 1 [datasheet = GEC]
+XV1 A G K Triode
++params: mu=22.5 ex=1.3 kg1=1300 kp=260 kvb=300 ccg=2.2p cpg=4p ccp=0.7p
+.ends
+
+.subckt 6DN7_2 A G K ; section 2 [datasheet = GEC]
+XV1 A G K Triode
++params: mu=15.4 ex=1.3 kg1=490 kp=260 kvb=300 ccg=2.2p cpg=5.5p ccp=1p
+.ends
+
+.subckt 2A3 A G K
+* TUNG-SOL Data sheet 
+XV1 A G K Triode
++params: MU=4.05 EX=1.634 KG1=3652.2 KP=58.47 KVB=300.0 VCT=0.00 RGI=1000 CCG=17.0p cpg=8.2p CCP=6.0p
+.ends
+
+.subckt 2A3_sofia A G K ; Sofia
+XV1 A G K Triode
++params: mu=4.545 ex=1.5 kg1=1744 kp=41.4 kvb=17.1 cpg=16.5p ccg=7.5p ccp=5.5p rgi=1000
+.ends
+
+.subckt 2A3_JJ A G K
+* JJ Data sheet 
+XV1 A G K Triode
++params: MU=4.30 EX=1.868 KG1=7214.4 KP=23.90 KVB=300.0 VCT=0.00 RGI=1000 CCG=17.0p cpg=11.0p CCP=7.5p
+.ends
+
+.subckt 6C33C A G K ; Sofia
+XV1 A G K Triode
++params: mu=2.67 ex=1.45 kg1=418 kp=14.6 kvb=5 cpg=30p ccg=30p ccp=10p rgi=1000
+.ends
+
+.subckt 6C4C A G K
+XV1 A G K Triode
++params: mu=4.4 ex=1.5 kg1=2136 kp=49.5 kvb=23 cpg=16.5p ccg=7.5p ccp=5.5p rgi=1000 ;(2A3 values)
+.ends
+
+.subckt 6C45-PE A G K
+XV1 A G K Triode
++params: mu=47.4501 ex=2.374193 kg1=268.615545 kp=485.735371 kvb=501.503636 rgi=300
++ccg=2.4p cpg=4p ccp=.7p
+.ends
+
+.subckt 6CW4 A G K ; placca griglia catodo NUVISTOR R.C.A.
+XV1 A G K Triode
++params: mu=68.75 ex=1.35 kg1=160 kp=250 kvb=300 rgi=200 ccg=4.1p cpg=.92p ccp=.18p
+.ends
+
+.subckt 71A  A G K
+XV1 A G K Triode
++params: mu=3.15 ex=1.5 kg1=6350 kp=26.5 kvb=9 cpg=7.4p ccg=3.7p ccp=2.1p rgi=1000
+.ends
+
+.subckt 300B  A G K
+* Western Electric Data sheet 1950 
+XV1 A G K Triode
++params: MU=3.92 EX=1.504 KG1=2140.3 KP=64.28 KVB=300.0 VCT=0.00 RGI=1000 CCG=17.0p cpg=11.0p CCP=7.5p
+.ends
+
+.subckt 300B_sofia A G K ; Sofia
+XV1 A G K Triode
++params: mu=4.16 ex=1.5 kg1=1922 kp=45.5 kvb=7 cpg=15p ccg=9p ccp=4.3p rgi=1000
+.ends
+
+.subckt 300B_JJ A G K
+* JJ Data sheet 
+XV1 A G K Triode
++params: MU=3.92 EX=1.504 KG1=2140.3 KP=64.28 KVB=300.0 VCT=0.00 RGI=1000 CCG=17.0p cpg=11.0p CCP=7.5p
+.ends
+
+.subckt SV300B_Svetlana A G K
+* Svetlana's Data sheet 
+XV1 A G K Triode
++params: MU=3.91 EX=1.301 KG1=943.5 KP=229.85 KVB=300.0 VCT=0.00 RGI=1000 CCG=9.0p cpg=15.0p CCP=7.5p
+.ends
+
+.subckt 801A A G K
+XV1 A G K Triode
++params: mu=8.06 ex=1.596 kg1=11520 kp=162 kvb=0.1 rgi=7500 ccg=4.5p cpg=6p ccp=1.5p
+.ends
+
+.subckt 811A A G K
+XV1 A G K Triode
++params: mu=160 ex=1.317 kg1=1350 kp=100 kvb=1400 rgi=1000 ccg=2.3p cpg=2.4p ccp=0.9p
+.ends
+
+.subckt 845 A G K
+XV1 A G K Triode
++params: mu=5.355 ex=1.5 kg1=6323  kp=85.64 kvb=65.8 cpg=13.5e-12
++ccg=6e-12 ccp=6.5e-12 rgi=1000
+.ends
+
+.subckt 5687WA A G K
+XV1 A G K Triode
++params: mu=18.14 ex=1.48 kg1=665 kp=128.5 kvb=13.6
++cpg=5.2p ccg=5.2p ccp=0.8p rgi=1000
+.ends
+
+.subckt 5842_417 A G K
+XV1 A G K Triode
++params: mu=42.4 ex=2.21 kg1=393 kp=629 kvb=446 rgi=2000
++ccg=9p cpg=1.8p ccp=0.48p
+.ends
+
+.subckt E182CC A G K ; placca griglia catodo
+XV1 A G K Triode
++params: mu=24 ex=1.7 kg1=75 kp=320 kvb=300 rgi=2k
++ccg=2.3p cpg=2.4p ccp=0.9p
+.ends
+
+.subckt ECC99 A G K
+XV1 A G K Triode
++params: mu=23.33 ex=1.48 kg1=448.5 kp=172.65 kvb=8.92
++cpg=5p ccg=6p ccp=1p rgi=1000
+.ends
+
+.subckt EL34_sofia A G K ; as triode
+XV1 A G K Triode
++params: mu=11.17 ex=1.48 kg1=597 kp=40.5 kvb=24.6
++cpg=1.1p ccg=15p ccp=8.5p rgi=1000
+.ends
+
+.subckt GM70 A G K
+XV1 A G K Triode
++params: mu=8.037 ex=1.5 kg1=4121 kp=182.25 kvb=34
++cpg=12.p ccg=8.p ccp=4.p rgi=1000
+.ends
+
+.subckt VV30B_sofia A G K
+XV1 A G K Triode
++params: mu=3.775 ex=1.52 kg1=2230 kp=43.6 kvb=5
++cpg=15.p ccg=9.p ccp=4.3p rgi=1000 ; 300b cap values
+.ends
+
+.subckt 6AC7_as_triode A G K ; [graph by Tom Schlangen]
+XV1 A G K Triode
++params: mu=50 ex=1.1 kg1=200 kp=340 kvb=300 ccg=11p cpg=0.015p ccp=5p
+.ends
+
+.subckt 6SH4_as_triode A G K ; same as 6AC7
+XV1 A G K Triode
++params: mu=50 ex=1.1 kg1=200 kp=340 kvb=300 ccg=11p cpg=0.015p ccp=5p
+.ends
+
+.subckt 6F6_as_triode A G K ; datasheet = RCA
+* equiv.s: KT61, EL33, VT66
+XV1 A G K Triode
++params: mu=7 ex=1.3 kg1=2200 kp=80 kvb=300
++cpg=0.26p ccg=6.5p ccp=13.5p rgi=1000
+.ends
+
+.subckt 6922 A G K
+XV1 A G K Triode
++params: MU=31.75 EX=1.177 KG1=233.1 KP=288.17 KVB=83.4 VCT=0.00 RGI=2000 CCG=2.3P cpg=2.4P CCP=.9P
+.ends
+
+.subckt 7025 A G K
+* Sylvania Technical Manual 
+XV1 A G K Triode
++params: MU=102.50 EX=1.409 KG1=1598.8 KP=813.82 KVB=44.9 VCT=0.50 RGI=2000 CCG=2.3p cpg=2.4p CCP=0.9p
+.ends
+
+.subckt 6CG7 A G K
+* GE Data Sheet 1963
+XV1 A G K Triode
++params: MU=21.86 EX=1.319 KG1=1248.5 KP=140.12 KVB=300.0 VCT=0.00 RGI=2000 CCG=2.9p cpg=4.7p CCP=2.7p
+.ends
+
+
+********************************
+* Triode small signal Pentodes *
+********************************
+
+.subckt 7199_triode A G K
+* RCA 
+XV1 A G K Triode
++params: MU=32.71 EX=1.284 KG1=534.8 KP=52.95 KVB=300.0 VCT=0.00 RGI=2000 CCG=3.0p cpg=2.5p CCP=1.0p
+.ends
+
+.subckt 6AN8_triode A G K
+* Sylvania Data sheet 
+XV1 A G K Triode
++params: MU=25.23 EX=1.350 KG1=772.2 KP=65.20 KVB=300.0 VCT=0.00 RGI=2000 CCG=2.7p cpg=2.2p CCP=0.8p
+.ends
+
+.subckt ECF80_triode A G K
+XV1 A G K Triode
++params: MU=22.97 EX=1.300 KG1=616.4 KP=71.31 KVB=150.9 VCT=0.50 RGI=2000 CCG=3.0p cpg=2.2p CCP=2.3p
+.ends
+
+
+**********************************
+* Early form models specifically *
+* for VHF FM tunerhead circuit   *
+**********************************
+
+.subckt ECF80t A G K ; ECF80 triode as RF oscillator
++params: MU=22.97 EX=1.3 KG1=616.4 KP=71.31 KVB=150.9 VCT=0.50 CCG=3.0p cpg=2.2p CCP=2.3p Rgi=100
+
+Rg G 1 {Rgi} ; grid forward resistance
+D1 1 K DX ; grid forward diode
+
+* Ee2 EP 0 Value=(V(A,K))
+* Re2 EP 0 1G
+* Ee3 EG 0 Value=(V(G,K))
+* Re3 EG 0 1G
+
+RE1 E1 0 1G ; dummy so node E1 has two connections
+Ee1 E1 0 Value={(V(A,K)/kP) * log(1 + exp(kP * (1/mu + V(G,K)/sqrt(kVB + V(A,K)**2))))}
+GIP A K  Value={(pwr(V(E1),{EX})/{kG1}) * (1 + sgn(V(E1)))}
+
+CM1 G  K  {ccg}
+CM2 A  G  {cpg}
+CM3 A  K  {ccp}
+
+.MODEL DX D(Ron=1 Roff=1G Vfwd=0.75)
+.ends
+
+
+.subckt ECC85 A G K ; ECC85 triode as RF amplifier
++params: mu=50 ex=1.4 kg1=800 kp=500 kvb=300 ccg=2.3p cpg=2.1p ccp=0.7p rgi=100
+* +params: mu=100 ex=1.4 kg1=1060 kp=600 kvb=300 ccg=2.3p cpg=2.4p ccp=0.9p rgi=2k
+
+Rg G 1 {Rgi} ; grid forward resistance
+D1 1 K DX ; grid forward diode
+
+* Ee2 EP 0 Value=(V(A,K))
+* Re2 EP 0 1G
+* Ee3 EG 0 Value=(V(G,K))
+* Re3 EG 0 1G
+
+RE1 E1 0 1G ; dummy so node E1 has two connections
+Ee1 E1 0 Value={(V(A,K)/kP) * log(1 + exp(kP * (1/mu + V(G,K)/sqrt(kVB + V(A,K)**2))))}
+GIP A K  Value={(pwr(V(E1),{EX})/{kG1}) * (1 + sgn(V(E1)))}
+
+CM1 G  K  {ccg}
+CM2 A  G  {cpg}
+CM3 A  K  {ccp}
+
+.MODEL DX D(Ron=1 Roff=1G Vfwd=0.75)
+.ends
+
+.subckt ECC88 A G K ; ECC88 triode as RF amplifier
++params: mu=28 ex=1.3 kg1=330 kp=320 kvb=300 ccg=2.3p cpg=2.1p ccp=0.7p rgi=100
+
+Rg G 1 {Rgi} ; grid forward resistance
+D1 1 K DX ; grid forward diode
+
+* Ee2 EP 0 Value=(V(A,K))
+* Re2 EP 0 1G
+* Ee3 EG 0 Value=(V(G,K))
+* Re3 EG 0 1G
+
+RE1 E1 0 1G ; dummy so node E1 has two connections
+Ee1 E1 0 Value={(V(A,K)/kP) * log(1 + exp(kP * (1/mu + V(G,K)/sqrt(kVB + V(A,K)**2))))}
+GIP A K  Value={(pwr(V(E1),{EX})/{kG1}) * (1 + sgn(V(E1)))}
+
+CM1 G  K  {ccg}
+CM2 A  G  {cpg}
+CM3 A  K  {ccp}
+
+.MODEL DX D(Ron=1 Roff=1G Vfwd=0.75)
+.ends
+
+
+.subckt ECF82_triode A G K
+XV1 A G K Triode
++params: MU=49.87 EX=1.255 KG1=323.2 KP=106.38 KVB=300.0 VCT=0.00 RGI=2000 CCG=3.0p cpg=2.2p CCP=2.3p
+.ends
+
+.subckt 6U8A_triode A G K
+XV1 A G K Triode
++params: MU=49.87 EX=1.255 KG1=323.2 KP=106.38 KVB=300.0 VCT=0.00 RGI=2000 CCG=3.0p cpg=2.2p CCP=2.3p
+.ends
+
+.subckt ECF83_triode A G K
+* Universal Vademecum (1960) 
+XV1 A G K Triode
++params: MU=11.83 EX=1.052 KG1=521.1 KP=69.30 KVB=300.0 VCT=0.00 RGI=2000 CCG=3.2p cpg=3.5p CCP=3.1p
+.ends
+
+.subckt ECF86_triode
+* Mazda Belvu Data Book  AKA 6HG8
+XV1 A G K Triode
++params: MU=16.08 EX=1.162 KG1=601.4 KP=79.68 KVB=300.0 VCT=0.00 RGI=2000 CCG=3.2p cpg=2.7p CCP=1.8p
+.ends
+
+
+**************************
+* Triode Output Pentodes *
+**************************
+
+.subckt ECL80_triode A G K
+* Philips Data book 1951 AKA 6AB8 
+XV1 A G K Triode
++params: MU=29.30 EX=1.332 KG1=1443.9 KP=45.50 KVB=300.0 VCT=0.00 RGI=2000 CCG=3.2p cpg=2.7p CCP=1.8p
+.ends
+
+.subckt ECL81_triode A G K
+* universal vademecum (1960) 
+XV1 A G K Triode
++params: MU=66.31 EX=1.390 KG1=1400.2 KP=369.30 KVB=2.5 VCT=0.50 RGI=2000 CCG=3.2p cpg=2.7p CCP=1.8p
+.ends
+
+.subckt ECL82_triode A G K
+* Philips Data Book 17-02-1956 AKA 6BM8
+XV1 A G K Triode
++params: MU=71.97 EX=1.480 KG1=1481.3 KP=500.37 KVB=0.7 VCT=0.50 RGI=2000 CCG=3.2p cpg=2.7p CCP=1.8p
+.ends
+
+.subckt ECL83_triode A G K
+* universal vademecum (1960) 
+XV1 A G K Triode
++params: MU=119.15 EX=1.321 KG1=732.5 KP=305.21 KVB=1.8 VCT=0.50 RGI=2000 CCG=3.2p cpg=2.7p CCP=1.8p
+.ends
+
+.subckt ECL84_triode A G K
+* Philips Data Book sept 1968 AKA 6DX8 
+XV1 A G K Triode
++params: MU=87.85 EX=1.507 KG1=473.2 KP=343.45 KVB=300.0 VCT=0.00 RGI=2000 CCG=3.2p cpg=2.7p CCP=1.8p
+.ends
+
+.subckt ECL85_triode A G K
+* Philips Data Book Jan 1960 AKA 6GV8 
+XV1 A G K Triode
++params: MU=56.54 EX=1.608 KG1=719.6 KP=247.12 KVB=3.0 VCT=0.50 RGI=2000 CCG=3.2p cpg=2.7p CCP=1.8p
+.ends
+
+.subckt ECL86_triode A G K
+* Philips Data Book Jan 1970 AKA 6GW8
+XV1 A G K Triode
++params: MU=102.92 EX=1.425 KG1=1754.6 KP=1098.83 KVB=0.5 VCT=0.50 RGI=2000 CCG=3.2p cpg=2.7p CCP=1.8p
+.ends
+
+.SUBCKT EF86 A G K ; wired as triode
+XV1 A G K Triode
++params: mu=38 ex=1.5 kg1=1400 kp=250 kvb=300 vct=0.00 rgi=2000 rg3=3000 ccg=4.3p cpg=0.6p ccp=5.1p
+.ENDS
+

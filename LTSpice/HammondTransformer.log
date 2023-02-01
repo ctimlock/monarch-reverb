@@ -1,0 +1,4 @@
+Circuit: * C:\Users\Charlie\Projects\amp-work\Benson Monarch\LTSpice\HammondTransformer.asc
+
+Fatal Error: This circuit does not have a conduction path to ground!
+   Please flag a node as ground.
