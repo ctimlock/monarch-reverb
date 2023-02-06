@@ -1,4 +1,4 @@
-# An analysis of the Benson Monarch Reverb Amplifier
+# An obsessive analysis of the Benson Monarch Reverb Amplifier
 
 ## Overview
 
