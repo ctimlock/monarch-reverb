@@ -1,0 +1,134 @@
+* C:\Program Files\LTC\LTspiceIV\My Drawings\Valve Rectifier model-2.asc
+
+******************************************************
+* Model generated on 11 Dec 2009
+* Model format: LTspice
+* Valve Full-Wave Rectifier macro model
+* External node designations
+* Node 1 -> anode #1
+* Node 2 -> anode #2
+* Node 3 -> cathode
+* No heater shown.
+* Manufacturer commented after each name
+* is whose datasheet was used.
+*
+* MODIFIED 11/10/2009 due to 'time step too small'
+* errors; removed rectifier diodes as not necessary
+******************************************************
+
+.SUBCKT VRECTIFIER 1 2 3 ; base generic, = GZ34
++PARAMS: Cak=20p Vpiv=1500 Vmax=777
+B1 1 3 I=0.00396 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.00396 * uramp(V(2,3)) * sqrt(V(2,3))
+D1 4 1 vrzmax
+D2 4 3 vrzpiv
+D3 5 2 vrzmax
+D4 5 3 vrzpiv
+R1 4 0 1G
+R2 5 0 1G
+.model vrzpiv D
++Is=.6n Rs=.5 Cjo={Cak*2} nbv=6 bv={Vpiv}
++Ibv=1m Vpk={Vpiv} type=zener
+.model vrzmax D
++Is=.6n Rs=.5 Cjo={Cak*2} nbv=6 bv={Vmax}
++Ibv=1m Vpk={Vmax} type=zener
+.ENDS
+
+.SUBCKT GZ34 1 2 3 ; Mullard
+XV1 1 2 3 VRECTIFIER
+.ENDS
+
+.SUBCKT 5AR4 1 2 3 ; GEC, Amperex, equiv. GZ34
+XV1 1 2 3 VRECTIFIER
+.ENDS
+
+.SUBCKT 5U4G 1 2 3 ; Sylvania
+XV1 1 2 3 VRECTIFIER
+B1 1 3 I=0.00272 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.00272 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT GZ37 1 2 3 ; Mullard
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=20p Vpiv=1600 Vmax=707
+B1 1 3 I=0.0031 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.0031 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT U54 1 2 3 ; Mazda
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=20p Vpiv=1600 Vmax=707
+B1 1 3 I=0.0031 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.0031 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT 6X5GT 1 2 3 ; GEC, RCA
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=4p Vpiv=1250 Vmax=495
+B1 1 3 I=0.000638 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.000638 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT EZ80 1 2 3 ; Mullard
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=4p Vpiv=1250 Vmax=495
+B1 1 3 I=0.00165 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.00165 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT EZ81 1 2 3 ; Mullard
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=4p Vpiv=1400 Vmax=636
+B1 1 3 I=0.003705 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.003705 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT 5V3A 1 2 3 ; RCA
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=20p Vpiv=1550 Vmax=777
+B1 1 3 I=0.001287 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.001287 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT 5V4GA 1 2 3 ; RCA
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=20p Vpiv=1400 Vmax=530
+B1 1 3 I=0.0014 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.0014 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT 5Y3GT 1 2 3 ; GEC
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=20p Vpiv=1400 Vmax=495
+B1 1 3 I=0.000269 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.000269 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT 6AL5 1 2 3 ; GEC
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=3.2p Vpiv=330 Vmax=165
+B1 1 3 I=0.0018 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.0018 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT 6D22S 1 2 3 ; Svetlana
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=12p Vpiv=6000 Vmax=2000
+B1 1 3 I=0.006769 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.006769 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT EB91 1 2 3 ; Philips, = EAA91
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=3p Vpiv=420 Vmax=212
+B1 1 3 I=0.0018 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.0018 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
+.SUBCKT EAA91 1 2 3 ; Philips, = EB91
+XV1 1 2 3 VRECTIFIER
++PARAMS: Cak=3p Vpiv=420 Vmax=212
+B1 1 3 I=0.0018 * uramp(V(1,3)) * sqrt(V(1,3))
+B2 2 3 I=0.0018 * uramp(V(2,3)) * sqrt(V(2,3))
+.ENDS
+
