@@ -6219,22 +6219,20 @@
       <verticalAlignment>CENTER</verticalAlignment>
       <orientation>DEFAULT</orientation>
     </diylc.misc.Label>
+    <diylc.misc.Label>
+      <name>LAB4</name>
+      <point x="0.3125" y="12.4375"/>
+      <text>Benson Monarch Layout&lt;br&gt;By Hoodnight, 2023</text>
+      <font name="Dialog.bold" size="32" style="1"/>
+      <color hex="000000"/>
+      <horizontalAlignment>LEFT</horizontalAlignment>
+      <verticalAlignment>CENTER</verticalAlignment>
+      <orientation>DEFAULT</orientation>
+    </diylc.misc.Label>
   </components>
   <groups>
     <set>
       <null/>
-    </set>
-    <set>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[51]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[50]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[49]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[54]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[53]"/>
-      <diylc.boards.TerminalStrip reference="../../../components/diylc.boards.TerminalStrip[2]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[52]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[55]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[48]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[47]"/>
     </set>
     <set/>
     <set>
@@ -6242,42 +6240,52 @@
       <diylc.shapes.Polygon reference="../../../components/diylc.shapes.Polygon"/>
     </set>
     <set>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[49]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[53]"/>
+      <diylc.boards.TerminalStrip reference="../../../components/diylc.boards.TerminalStrip[2]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[51]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[47]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[50]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[54]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[48]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[52]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[55]"/>
+    </set>
+    <set>
+      <diylc.electromechanical.MiniToggleSwitch reference="../../../components/diylc.electromechanical.MiniToggleSwitch"/>
       <diylc.electromechanical.MiniToggleSwitch reference="../../../components/diylc.electromechanical.MiniToggleSwitch[2]"/>
       <diylc.shapes.Rectangle reference="../../../components/diylc.shapes.Rectangle"/>
-      <diylc.electromechanical.MiniToggleSwitch reference="../../../components/diylc.electromechanical.MiniToggleSwitch"/>
     </set>
-    <set/>
     <set>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[62]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[61]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[58]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[60]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[56]"/>
       <diylc.misc.Label reference="../../../components/diylc.misc.Label[59]"/>
       <diylc.misc.Label reference="../../../components/diylc.misc.Label[57]"/>
       <diylc.misc.Label reference="../../../components/diylc.misc.Label[63]"/>
-      <diylc.boards.TerminalStrip reference="../../../components/diylc.boards.TerminalStrip[3]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[61]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[56]"/>
       <diylc.misc.Label reference="../../../components/diylc.misc.Label[64]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[62]"/>
+      <diylc.boards.TerminalStrip reference="../../../components/diylc.boards.TerminalStrip[3]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[58]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[60]"/>
     </set>
-    <set/>
     <set>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[19]"/>
       <diylc.misc.Label reference="../../../components/diylc.misc.Label[15]"/>
+      <diylc.boards.TerminalStrip reference="../../../components/diylc.boards.TerminalStrip"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[17]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[21]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[19]"/>
       <diylc.misc.Label reference="../../../components/diylc.misc.Label[18]"/>
       <diylc.misc.Label reference="../../../components/diylc.misc.Label[20]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[16]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[21]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[17]"/>
-      <diylc.misc.Label reference="../../../components/diylc.misc.Label[46]"/>
       <diylc.misc.Label reference="../../../components/diylc.misc.Label[14]"/>
-      <diylc.boards.TerminalStrip reference="../../../components/diylc.boards.TerminalStrip"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[46]"/>
+      <diylc.misc.Label reference="../../../components/diylc.misc.Label[16]"/>
     </set>
   </groups>
   <lockedLayers/>
   <lockedComponents>
+    <diylc.boards.BlankBoard reference="../../components/diylc.boards.BlankBoard"/>
     <diylc.boards.BlankBoard reference="../../components/diylc.boards.BlankBoard[2]"/>
     <diylc.boards.BlankBoard reference="../../components/diylc.boards.BlankBoard[3]"/>
-    <diylc.boards.BlankBoard reference="../../components/diylc.boards.BlankBoard"/>
   </lockedComponents>
   <hiddenLayers/>
   <font name="Dialog.plain" size="14" style="0"/>
