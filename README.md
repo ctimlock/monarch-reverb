@@ -17,3 +17,6 @@ More investigation is required to exactly narrow down transformer specifications
   - Preamp-only (coming soon)
 - Duncan PSUD2
   - [Using Hammond 370DX](/psud2-file/monarch-reverb-370DX.psu)
+- Useful Threads
+  - [Amp Garage](https://ampgarage.com/forum/viewtopic.php?t=30258)
+  - [Guitars Canada](https://www.guitarscanada.com/threads/benson-monarch-reverb-inspection.291148/)
